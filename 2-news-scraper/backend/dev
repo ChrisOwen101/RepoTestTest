@@ -1,0 +1,22 @@
+
+# set FLASK_APP=app.py
+export FLASK_APP=app.py
+
+python3 -m venv venv
+source ./venv/bin/activate
+
+echo 'export PATH="/usr/local/opt/libpq/bin:$PATH"' >> ~/.zshrc
+source ~/.zshrc
+
+brew install openssl
+brew install libpq
+export LIBRARY_PATH=$LIBRARY_PATH:/opt/homebrew/opt/openssl/lib
+python3 -m pip install -r requirements.txt
+
+# ensure psql is installed
+# create db
+# create table
+# seed data
+
+
+python3 -m flask run
