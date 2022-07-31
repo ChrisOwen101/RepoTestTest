@@ -1,5 +1,6 @@
 {
   "scripts": {
-    "start": "python3 -m pip install -r philosophy/requirements.txt && python3 philosophy"
+    "install": "python3 -m pip install -r philosophy/requirements.txt",
+    "start": "python3 philosophy"
   }
 }
