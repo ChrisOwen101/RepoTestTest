@@ -1,4 +1,5 @@
 from http.server import BaseHTTPRequestHandler, HTTPServer
+import os
 from utils import open_link
 
 
@@ -87,7 +88,7 @@ def getRoute(q) :
 # Start the server
 if __name__ == "__main__":        
     hostName = "localhost"
-    serverPort = 8080
+    serverPort = os.environ.get("PORT") or 8080
     webServer = HTTPServer((hostName, serverPort), API)
     print("Server started http://%s:%s" % (hostName, serverPort))
     try:
