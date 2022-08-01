@@ -88,9 +88,10 @@ def getRoute(q) :
 # Start the server
 if __name__ == "__main__":        
     hostName = "localhost"
-    serverPort = os.environ.get("PORT") or 8080
-    webServer = HTTPServer((hostName, str(serverPort)), API)
-    print("Server started http://%s:%s" % (hostName, str(serverPort)))
+    serverPort = os.environ.get("PORT") or '8080'
+    print(serverPort)
+    webServer = HTTPServer((hostName, serverPort), API)
+    print("Server started http://%s:%s" % (hostName, serverPort))
     try:
         webServer.serve_forever()
     except KeyboardInterrupt:
