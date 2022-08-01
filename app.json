@@ -12,5 +12,6 @@
     "HEROKU_PARENT_APP_NAME": {
       "required": true
     }
-  }
+  },
+  "buildpacks": ["heroku/python"]
 }
