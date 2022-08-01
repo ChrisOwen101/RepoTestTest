@@ -91,7 +91,7 @@ if __name__ == "__main__":
     if (os.environ.get('HEROKU_APP_NAME')):
         hostName = os.environ.get('HEROKU_APP_NAME')
     serverPort = os.environ.get("PORT") or '8080'
-    print(serverPort)
+    print(serverPort, hostName, os.environ)
     webServer = HTTPServer((hostName, int(serverPort)), API)
     print("Server started http://%s:%s" % (hostName, int(serverPort)))
     try:
