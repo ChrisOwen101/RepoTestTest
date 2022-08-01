@@ -1,0 +1,16 @@
+{
+  "name": "Advanced App",
+  "scripts": {
+    "install": "python3 -m pip install -r requirements.txt",
+    "start": "python3 philosophy"
+  },
+
+  "env": {
+    "HEROKU_APP_NAME": {
+      "required": true
+    },
+    "HEROKU_PARENT_APP_NAME": {
+      "required": true
+    }
+  }
+}
