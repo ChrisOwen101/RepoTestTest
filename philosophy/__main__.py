@@ -90,8 +90,8 @@ if __name__ == "__main__":
     hostName = "localhost"
     serverPort = os.environ.get("PORT") or '8080'
     print(serverPort)
-    webServer = HTTPServer((hostName, serverPort), API)
-    print("Server started http://%s:%s" % (hostName, serverPort))
+    webServer = HTTPServer((hostName, int(serverPort)), API)
+    print("Server started http://%s:%s" % (hostName, int(serverPort)))
     try:
         webServer.serve_forever()
     except KeyboardInterrupt:
