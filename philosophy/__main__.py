@@ -88,6 +88,8 @@ def getRoute(q) :
 # Start the server
 if __name__ == "__main__":        
     hostName = "localhost"
+    if (os.environ.get('HEROKU_APP_NAME')):
+        hostName = os.environ.get('HEROKU_APP_NAME')
     serverPort = os.environ.get("PORT") or '8080'
     print(serverPort)
     webServer = HTTPServer((hostName, int(serverPort)), API)
