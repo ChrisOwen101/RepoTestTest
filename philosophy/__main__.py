@@ -87,13 +87,13 @@ def getRoute(q) :
 
 # Start the server
 if __name__ == "__main__":        
-    hostName = "localhost"
+    hostName = "http://localhost"
     if (os.environ.get('HEROKU_APP_NAME')):
         hostName = os.environ.get('HEROKU_APP_NAME')
     serverPort = os.environ.get("PORT") or '8080'
     print(serverPort, hostName, os.environ)
     webServer = HTTPServer((hostName, int(serverPort)), API)
-    print("Server started http://%s:%s" % (hostName, int(serverPort)))
+    print("Server started %s:%s" % (hostName, int(serverPort)))
     try:
         webServer.serve_forever()
     except KeyboardInterrupt:
