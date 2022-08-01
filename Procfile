@@ -1,1 +1,1 @@
-web: python3 philosophy
+web: DYNO=$DYNO python3 philosophy
