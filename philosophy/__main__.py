@@ -1,6 +1,7 @@
 from http.server import BaseHTTPRequestHandler, HTTPServer
 import os
-from utils import open_link
+from wikipedia import scrape
+from s3 import saveToBucket
 
 
 
@@ -33,7 +34,9 @@ class API(BaseHTTPRequestHandler):
         # If the user has submitted a query, show the results
         if self.path != '/' and self.path != '/?q=':
             route, degrees = getRoute(q)
-            if (degrees == False) :
+            if (route == "LOOP"):
+                self.wfile.write(bytes("<strong>" + q + " got stuck in a loop looking for philosophy</strong>", "utf-8"))
+            elif (degrees == False) :
                 self.wfile.write(bytes("<strong>" + q + " has no route to philosophy</strong><ol>", "utf-8"))
             else :
                 self.wfile.write(bytes("<strong>" + str(degrees) + ": </strong><ol>", "utf-8"))
@@ -43,9 +46,10 @@ class API(BaseHTTPRequestHandler):
                 self.wfile.write(bytes("<form action='/' method='post'><button type='submit'>Save output to S3 Bucket</button></form>", "utf-8"))
 
         self.wfile.write(bytes("</body></html>", "utf-8"))
+    
+    # Todo: If the user clicks 'Save output to S3 Bucket'.
     def do_POST(self):
-
-        # If the user clicks 'Save output to S3 Bucket'.
+        saveToBucket()
         self.send_response(200)
 
 # Follow the first links until you reach philosophy
@@ -63,14 +67,15 @@ def getRoute(q) :
     check_loop = set()
     while counter < 64:
         if link['a_href'] in check_loop:
-            route.append('It is a loop.')
+            route = "LOOP"
             flag = False
             break
         else :
             check_loop.add(link['a_href'])
         temp_link = wiki_link + link['a_href']
+        print(temp_link)
         route.append((str(counter) , link['a_text']))
-        link, flag = open_link(temp_link)
+        link, flag = scrape(temp_link)
         if flag == False :
             break
         if link['a_href'] == wiki_philosophy :
@@ -87,13 +92,13 @@ def getRoute(q) :
 
 # Start the server
 if __name__ == "__main__":        
-    hostName = "http://localhost"
-    if (os.environ.get('HEROKU_APP_NAME')):
+    hostName = "localhost"
+    serverPort = '8080'
+    if (os.environ.get('HEROKU_APP_ID')):
         hostName = ''
-    serverPort = os.environ.get("PORT", '8080')
-    print(serverPort, hostName, os.environ)
+        serverPort = os.environ.get("PORT")
     webServer = HTTPServer((hostName, int(serverPort)), API)
-    print("Server started %s:%s" % (hostName, int(serverPort)))
+    print("Server started http://%s:%s" % (hostName, int(serverPort)))
     try:
         webServer.serve_forever()
     except KeyboardInterrupt:

@@ -37,12 +37,13 @@ def check_a_isbad(a_tag_text, text, bad_indexes):
         return True
     else:
         return False
-def open_link(link) :
+def scrape(link) :
     response = requests.get(link)
     soup = BeautifulSoup(response.content, 'html.parser')
     div_tag = soup.find('div', attrs={'id':'bodyContent'})
     p_tags = div_tag.find_all("p", recursive = True)
     counter = 1
+    # print(p_tags.__len__())
     for each_p in p_tags:
         if each_p.has_attr('class') and each_p['class'][0] == 'mw-empty-elt' :
             continue
