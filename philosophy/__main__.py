@@ -19,7 +19,8 @@ class API(BaseHTTPRequestHandler):
         self.send_header("Content-type", "text/html")
         self.end_headers()
         q = ""
-        if self.path != "/":
+
+        if "?q=" in self.path:
             q = self.path.split("?q=")[1]
 
         # Show a text input form
