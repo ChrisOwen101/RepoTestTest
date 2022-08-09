@@ -115,8 +115,8 @@ def getRoute(q):
 
 # Start the server
 if __name__ == "__main__":
-    hostName = ""
-    serverPort = "80"
+    hostName = "0.0.0.0"
+    serverPort = "5000"
     if os.environ.get("PORT"):
         hostName = ""
         serverPort = os.environ.get("PORT")
