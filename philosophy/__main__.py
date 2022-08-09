@@ -20,7 +20,7 @@ class API(BaseHTTPRequestHandler):
         self.end_headers()
         q = ""
 
-        if "?q=" in self.path:
+        if self.path != "/":
             q = self.path.split("?q=")[1]
 
         # Show a text input form
